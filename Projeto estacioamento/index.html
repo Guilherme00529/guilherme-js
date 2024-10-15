@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>So acaba com nois</title>
+
+</head>
+<body>
+
+ 
+    <div class="container">
+
+        <div id="q">
+
+            <h1>Pedágio</h1>
+
+            <label for="placa">Placa do Veículo</label>
+            <input type="text" id="placa">
+    
+            <label for="hora1">Hora de Entrada</label>
+    
+            <input type="number" id="hora1" placeholder="Hora" min="0" max="23">
+            <input type="number" id="minutos1" placeholder="Minutos" min="0" max="59">
+    
+            <label for="hora2">Hora de Saída</label>
+    
+            <input type="number" id="hora2" placeholder="Hora" min="0" max="23">
+            <input type="number" id="minutos2" placeholder="Minutos" min="0" max="59">
+
+            <button onclick="registrarVeiculo()">Registrar</button>
+
+            <button onclick="mostrarResultados()">Mostrar Resultados</button>
+
+            <button onclick="reset()">limpar</button>
+
+         
+    
+            <div id="resultado" style="margin-top: 20px;"></div>
+    
+
+        </div>
+
+       
+
+       
+    </div>
+
+
+
+    <script>
+
+        let contador = 0;
+        let menorVelocidade = Infinity;
+        let maiorVelocidade = 0;
+        let totalVelocidade = 0;
+        let totalPedagio = 0;
+        let menorPlaca = "";
+        let maiorPlaca = "";
+        let p1, p2;
+
+
+
+        function registrarVeiculo() {
+
+            contador++;
+            const pl = document.getElementById('placa').value;
+            const h1 = parseInt(document.getElementById('hora1').value);
+            const min1 = parseInt(document.getElementById('minutos1').value);
+            const h2 = parseInt(document.getElementById('hora2').value);
+            const min2 = parseInt(document.getElementById('minutos2').value);
+
+            const tempo1 = h1 + min1 / 60;
+            const tempo2 = h2 + min2 / 60;
+            const tempo = tempo2 - tempo1;
+
+            const velocidadeMedia = 70 / tempo;
+            const valorBase = 20;
+            let valor = 0;
+
+            if (contador === 1) {
+                p1 = `${h1}:${minutos1}`;
+            }
+            if (contador === contador) {
+                p2 = `${h2}:${minutos2}`;
+            }
+
+            if (velocidadeMedia < menorVelocidade) {
+                menorVelocidade = velocidadeMedia;
+                menorPlaca = pl;
+            }
+            if (velocidadeMedia > maiorVelocidade) {
+                maiorVelocidade = velocidadeMedia;
+                maiorPlaca = pl;
+            }
+
+            totalVelocidade += velocidadeMedia;
+
+            if (velocidadeMedia > 100) {
+                valor = valorBase * 0;
+
+            } else if (velocidadeMedia > 60) {
+                valor = valorBase * 0.10; 
+
+            } else {
+                valor = valorBase * 0.15; 
+            }
+
+            totalPedagio += valor;
+
+            alert(`Placa: ${pl}\nHora de entrada: ${h1}:${min1}\nHora de saída: ${h2}:${min2}\nVelocidade Média: ${velocidadeMedia.toFixed(2)} km/h\nValor pago: R$ ${valor.toFixed(2)}`);
+        }
+
+
+       
+
+        function mostrarResultados() {
+
+            const mediaVelocidade = totalVelocidade / contador;
+            const resultado = `
+
+                Menor Velocidade: ${menorVelocidade.toFixed(2)} (${menorPlaca})<br>
+                Maior Velocidade: ${maiorVelocidade.toFixed(2)} (${maiorPlaca})<br>
+                Média das velocidades: ${mediaVelocidade.toFixed(2)}<br>
+                Total dos valores cobrados: R$ ${totalPedagio.toFixed(2)}<br>
+                Início do processamento: ${p1}<br>
+                Final do processamento: ${p2}
+            `;
+            document.getElementById('resultado').innerHTML = resultado;
+        }
+        function reset(){
+
+            let = document.getElementById('placa').value = '';
+            let = document.getElementById('hora1').value = '';
+            let = document.getElementById('minutos1').value = '';
+            let = document.getElementById('hora2').value = '';
+            let = document.getElementById('minutos2').value = '';
+        }
+
+    </script>
+
+   <img src="p5.png" alt="Primeiro">
+  
+
+</body>
+</html>
